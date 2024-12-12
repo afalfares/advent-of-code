@@ -1,5 +1,5 @@
 with open('05.txt', 'r') as f:
-    rules_str, updates_str = [line for line in f.read().strip().split("\n\n")]
+    rules_str, updates_str = f.read().strip().split("\n\n")
     rules = [tuple(map(int, rule.split("|"))) for rule in rules_str.splitlines()]
     updates = [list(map(int, update.split(","))) for update in updates_str.splitlines()]
 
