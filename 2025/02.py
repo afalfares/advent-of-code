@@ -33,20 +33,24 @@ for r in parse(input):
 
 print(sum(ids))
 
-##### PART 2 (incomplete) #####
+##### PART 2 #####
+def divisors(n):
+    # ineff for large n but does the job
+    d = []
+    for i in range(2, n+1):
+        if n % i == 0:
+            d.append(i)
+    return d 
 
 def invalid_2(id: int) -> bool:
     id_str = str(id)
     size = len(id_str)
-    for i in range(0, size+1):
-        pass
-    if size == 0: 
-        return False
-    if id_str[:size] == id_str[size:]:
-        return True
-    else:
-        return False
-        
+    for rep in divisors(size):
+        rep_size = size // rep
+        if all(id_str[i:i+rep_size] == id_str[:rep_size] for i in range(0, size, rep_size)):
+            return True
+    return False
+
 def invalid_ids_2(r: tuple[int, int]) -> list[int]:
     ids = []
     min, max = r
@@ -54,3 +58,9 @@ def invalid_ids_2(r: tuple[int, int]) -> list[int]:
         if invalid_2(i):
             ids.append(i)
     return ids
+
+ids = []
+for r in parse(input):
+    ids += [x for x in invalid_ids_2(r) if x not in ids ]
+
+print(sum(ids))
